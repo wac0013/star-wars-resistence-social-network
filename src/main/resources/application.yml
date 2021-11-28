@@ -1,0 +1,67 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: star-wars-resistence-social-network
+  jpa:
+    hibernate:
+      ddl-auto: update
+  devtools:
+    add-properties: false
+server:
+  port: 9999
+  servlet:
+    context-path: /swrsn
+logging:
+  level:
+    br.com.swrsn: info
+springdoc:
+  packages-to-scan: br.com.swrsn
+  default-produces-media-type: application/json;charset=UTF-8
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  jpa:
+    show-sql: true
+  devtools:
+    add-properties: false
+logging:
+  level:
+    web: debug
+    br.com.swrsn: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:h2db
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        type: trace
+        use_sql_comments: true
+logging:
+  level:
+    br.com.swrsn: debug
+
+springdoc:
+  api-docs:
+    enabled: false
+---
+
+spring:
+  config:
+    activate:
+      on-profile: staging
